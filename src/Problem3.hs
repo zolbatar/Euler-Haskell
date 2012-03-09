@@ -2,26 +2,17 @@ import Data.Int
 import Data.List
 
 main = do
-  a <- primefactors 13195 pl []
-  print a
-  b <- primefactors 600851475143 pl []
-  print b
---  print $ primefactors 13195 pl []
---  print $ primefactors 600851475143 pl []
+  print $ primefactors 13195 13195 pl []
+  print $ primefactors 600851475143 600851475143 pl []
   where pl = primesList
 
-primefactors :: Integer -> [Integer]-> [Integer] -> IO [Integer]
-primefactors x pl xs = do
-  print x
-  print complete
---  print divided
-  print xs
-  print (complete * divided)
-  print ""
-  if (complete * divided) == x then return (xs ++ [x]) else primefactors (quot x divided) pl (xs ++ [divided])
+primefactors :: Integer -> Integer -> [Integer]-> [Integer] -> [Integer]
+primefactors target x pl xs = 
+  case divided of Nothing -> (xs ++ [x])
+                  Just(d) -> primefactors target (quot x d) pl (xs ++ [d])
   where div = [2..(quot x 2)]
-        divided = head $ filter (\y -> rem x y == 0) div
         complete = foldl (*) 1 xs
+        divided = find (\y -> rem x y == 0) div
 
 primesList :: [Integer]
 primesList = primes 500 -- 775146
