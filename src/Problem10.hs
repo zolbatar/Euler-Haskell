@@ -1,7 +1,8 @@
+import Data.List
 import Primes
 
 main = do
-  print xs
   print xss
-  where xs = primes 200000
+  where xs = primesFast [2..2000000] 2 2000000
         xss = foldl (+) 0 xs
+
