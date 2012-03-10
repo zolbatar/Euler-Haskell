@@ -3,17 +3,15 @@ module Primes where
 import Data.List
 
 -- Sieve of Eratosthenes
-primesFast :: [Int] -> Int -> Int -> [Int]
-primesFast xs x m = 
-  if x == l then xs
-  else primesFast (xs \\ [y*2,y*3..m]) (x+1) m
-  where y = xs !! x
-        l = length xs
+primesFast :: Int -> [Int]
+primesFast x = primesFast' [] [2..x] x
 
-primesFast2 :: [Int] -> [Int] -> Int -> [Int]
-primesFast2 xs [] m = xs
+primesFast' :: [Int] -> [Int] -> Int -> [Int]
+primesFast' ps [] m = ps
+primesFast' ps xs m = primesFast' (x : ps) (filter (\y -> rem y x /= 0) xs) m
+  where x = head xs
 
--- Crude, recursive brute force algorithms...okay for small sets, but exponentially worse for >100000
+-- Crude, recursive brute force algorithms...okay for small sets, but O(n2) I reckon
 noPrimes y = noPrimes' 2 y []
 noPrimes' :: Integer -> Int -> [Integer] -> [Integer]
 noPrimes' x z xs =
