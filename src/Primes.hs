@@ -4,11 +4,11 @@ import Data.List
 
 -- Sieve of Eratosthenes
 primesFast :: Int -> [Int]
-primesFast x = primesFast' [] [2..x]
+primesFast x = 2 : primesFast' [] [3,5..x] (sqrI x)
 
-primesFast' :: [Int] -> [Int] -> [Int]
-primesFast' ps [] = ps
-primesFast' ps xs = primesFast' (x : ps) (filter (\y -> rem y x /= 0) xs)
+primesFast' :: [Int] -> [Int] -> Int -> [Int]
+primesFast' ps [] m = ps
+primesFast' ps xs m = if x > m then (ps ++ xs) else primesFast' (x : ps) (filter (\y -> rem y x /= 0) xs) m
   where x = head xs
 
 -- Crude, recursive brute force algorithms...okay for small sets, but O(n2) I reckon
@@ -30,3 +30,6 @@ primes' x z xs =
 
 sqr :: Integer -> Integer
 sqr x = toInteger $ ceiling $ sqrt (fromIntegral x)
+
+sqrI :: Int -> Int
+sqrI x = floor $ sqrt (fromIntegral x)
