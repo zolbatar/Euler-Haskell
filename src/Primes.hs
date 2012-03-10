@@ -4,11 +4,11 @@ import Data.List
 
 -- Sieve of Eratosthenes
 primesFast :: Int -> [Int]
-primesFast x = primesFast' [] [2..x] x
+primesFast x = primesFast' [] [2..x]
 
-primesFast' :: [Int] -> [Int] -> Int -> [Int]
-primesFast' ps [] m = ps
-primesFast' ps xs m = primesFast' (x : ps) (filter (\y -> rem y x /= 0) xs) m
+primesFast' :: [Int] -> [Int] -> [Int]
+primesFast' ps [] = ps
+primesFast' ps xs = primesFast' (x : ps) (filter (\y -> rem y x /= 0) xs)
   where x = head xs
 
 -- Crude, recursive brute force algorithms...okay for small sets, but O(n2) I reckon
